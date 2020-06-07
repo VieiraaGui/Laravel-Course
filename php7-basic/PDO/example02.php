@@ -1,15 +1,17 @@
 <?php
 
 $conn = new PDO("mysql:host=localhost;dbname=dbphp7", "root", "");
+$conn->beginTransaction();
 
-$stmt = $conn->prepare("INSERT INTO tb_usuarios (deslogin, dessenha) VALUES (:LOGIN , :PASSWORD)");
+$stmt = $conn->prepare("DELETE FROM tb_usuarios WHERE idusuario = ?");
 
-$login = "jose";
-$password = "1517";
+$id = 2;
 
-$stmt->bindParam(":LOGIN", $login);
-$stmt->bindParam(":PASSWORD", $password);
+//$stmt->bindParam(":LOGIN", $login);
+//$stmt->bindParam(":PASSWORD", $password);
 
-$stmt->execute();
+$stmt->execute(array($id));
 
-echo "Inserido ok";
+//$conn->rollBack();
+$conn->commit();
+echo "Delete";
